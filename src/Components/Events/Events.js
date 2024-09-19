@@ -56,7 +56,7 @@ const Event = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen m-auto sm:w-11/12">
-      {/* hero section */}
+      {/* Hero Section */}
       <div
         className="mb-4 flex items-center justify-center w-full h-52 sm:h-96 md:h-[40rem] rounded-sm bg-cover bg-center bg-no-repeat"
         style={{
@@ -66,7 +66,7 @@ const Event = () => {
         <h1 className="text-6xl font-semibold text-white">Events</h1>
       </div>
 
-      {/* Container for the cards */}
+      {/* Container for the Cards */}
       <div className="flex flex-col items-center mx-10">
         {/* Events */}
         <div className="flex-1 overflow-hidden">
@@ -79,7 +79,7 @@ const Event = () => {
           </div>
         </div>
 
-        {/* Pagination buttons */}
+        {/* Pagination Buttons */}
         <div className="flex justify-between w-full mt-4">
           <button
             onClick={handlePrev}
@@ -97,18 +97,20 @@ const Event = () => {
           </button>
         </div>
 
-        {/* Additional space below the cards */}
+        {/* Additional Space Below the Cards */}
         <div className="mt-10"></div>
       </div>
 
-      {/* Inline CSS for custom styles */}
+      {/* Inline CSS for Custom Styles */}
       <style jsx>{`
         .glowing-border {
           box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
         }
         .card {
           transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
-          margin: 1rem; /* Add margin around each card */
+          margin: 0; /* Remove margin to fix spacing issue */
+          padding: 1rem; /* Add padding to card content */
+          box-sizing: border-box; /* Ensure padding and border are included in the total width and height */
         }
         .card:hover {
           border-color: black;
@@ -145,14 +147,14 @@ const Card = ({ isScrolling }) => {
           : "hover:scale-105 hover:shadow-lg hover:border-black hover:glowing-border"
       } card`}
     >
-      {/* event image */}
+      {/* Event Image */}
       <div className="relative h-40 md:h-48 lg:h-56 overflow-hidden">
         <img
           className="object-cover w-full h-full"
           src="/Events/Medical-Camp.jpg"
           alt="Medical Camp"
         />
-        {/* event description */}
+        {/* Event Description */}
         <div
           className="absolute inset-0 bg-white p-4 text-gray-900 rounded-lg transform translate-y-full opacity-0 transition-transform duration-300 ease-in-out hover:translate-y-0 hover:opacity-100 card__description"
         >
@@ -182,7 +184,7 @@ const Card = ({ isScrolling }) => {
   );
 };
 
-// GSAP animations
+// GSAP Animations
 gsap.from(".card", {
   y: 20,
   opacity: 0,
