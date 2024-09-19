@@ -24,15 +24,6 @@ const Event = () => {
     };
   }, []);
 
-  // Function to handle arrow clicks
-  const handleArrowClick = (direction) => {
-    if (direction === "next") {
-      setCurrentIndex((prevIndex) => Math.min(prevIndex + cardsPerPage, totalCards - cardsPerPage));
-    } else {
-      setCurrentIndex((prevIndex) => Math.max(prevIndex - cardsPerPage, 0));
-    }
-  };
-
   // Total number of cards
   const totalCards = 12; // Adjust according to the actual number of cards
 
@@ -48,28 +39,11 @@ const Event = () => {
         <h1 className="text-6xl font-semibold text-white">Events</h1>
       </div>
 
-      {/* Container for the cards and arrows */}
+      {/* Container for the cards */}
       <div className="flex flex-col items-center mx-10">
-        <div className="flex items-center justify-between w-full mb-4">
-          {/* Arrow buttons */}
-          <button
-            onClick={() => handleArrowClick("prev")}
-            className="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-600 mr-2"
-          >
-            &lt;
-          </button>
-
-          <button
-            onClick={() => handleArrowClick("next")}
-            className="p-2 bg-gray-800 text-white rounded-full hover:bg-gray-600 ml-2"
-          >
-            &gt;
-          </button>
-        </div>
-
         {/* Events */}
         <div className="flex-1 overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4"> {/* Add padding here */}
             {Array.from({ length: totalCards }, (_, index) => (
               index >= currentIndex && index < currentIndex + cardsPerPage ? (
                 <Card key={index} isScrolling={isScrolling} />
@@ -89,6 +63,7 @@ const Event = () => {
         }
         .card {
           transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+          margin: 1rem; /* Add margin around each card */
         }
         .card:hover {
           border-color: black;
