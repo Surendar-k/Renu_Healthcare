@@ -6,7 +6,37 @@ import gsap from "gsap";
 const Event = () => {
   const [isScrolling, setIsScrolling] = React.useState(false);
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [activeButton, setActiveButton] = React.useState(null);
   const cardsPerPage = 6; // Number of cards to show per page
+  const totalCards = 12; // Adjust according to the actual number of cards
+  const maxIndex = Math.ceil(totalCards / cardsPerPage) - 1;
+
+  const handleNext = () => {
+    if (currentIndex < maxIndex) {
+      setCurrentIndex(prevIndex => prevIndex + 1);
+      animateCards('next');
+      setActiveButton('next');
+      resetButtonColor();
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(prevIndex => prevIndex - 1);
+      animateCards('prev');
+      setActiveButton('prev');
+      resetButtonColor();
+    }
+  };
+
+  const resetButtonColor = () => {
+    setTimeout(() => setActiveButton(null), 300); // Reset button color after 300ms
+  };
+
+  const animateCards = (direction) => {
+    const cardsContainer = document.querySelector(".cards-container");
+    gsap.fromTo(cardsContainer, { x: direction === 'next' ? '100%' : '-100%' }, { x: '0%', duration: 0.5 });
+  };
 
   React.useEffect(() => {
     let timer;
@@ -24,9 +54,6 @@ const Event = () => {
     };
   }, []);
 
-  // Total number of cards
-  const totalCards = 12; // Adjust according to the actual number of cards
-
   return (
     <div className="bg-gray-100 min-h-screen m-auto sm:w-11/12">
       {/* hero section */}
@@ -43,13 +70,31 @@ const Event = () => {
       <div className="flex flex-col items-center mx-10">
         {/* Events */}
         <div className="flex-1 overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4"> {/* Add padding here */}
+          <div className="cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
             {Array.from({ length: totalCards }, (_, index) => (
-              index >= currentIndex && index < currentIndex + cardsPerPage ? (
+              index >= currentIndex * cardsPerPage && index < (currentIndex + 1) * cardsPerPage ? (
                 <Card key={index} isScrolling={isScrolling} />
               ) : null
             ))}
           </div>
+        </div>
+
+        {/* Pagination buttons */}
+        <div className="flex justify-between w-full mt-4">
+          <button
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            className={`p-2 rounded-md ${activeButton === 'prev' ? 'bg-black text-white' : 'bg-gray-300'}`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={currentIndex === maxIndex}
+            className={`p-2 rounded-md ${activeButton === 'next' ? 'bg-black text-white' : 'bg-gray-300'}`}
+          >
+            Next
+          </button>
         </div>
 
         {/* Additional space below the cards */}
@@ -59,7 +104,7 @@ const Event = () => {
       {/* Inline CSS for custom styles */}
       <style jsx>{`
         .glowing-border {
-          box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8); /* More intense glowing effect */
+          box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.8);
         }
         .card {
           transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
@@ -67,7 +112,7 @@ const Event = () => {
         }
         .card:hover {
           border-color: black;
-          box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.8); /* Glowing effect on hover */
+          box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.8);
         }
         .card__description {
           bottom: 0;
