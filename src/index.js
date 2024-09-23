@@ -12,7 +12,7 @@ import Login from "./Components/Login/Login";
 import Home from "./Components/Home/Home";
 import Signup from "./Components/Login/Signup";
 import Error from "./Components/Error/Error";
-import EventDetail from "./Components/Events/EventDetail";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter([
   {
@@ -50,7 +50,7 @@ const router = createBrowserRouter([
       },{
         path:"*",
         element:<Error/>
-      },{ path: "Events/:eventId", element: <EventDetail /> },
+      },
     ]
   }
 ])

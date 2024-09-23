@@ -174,10 +174,7 @@ const Card = ({ isScrolling }) => {
             A small river named Duden flows by their place and supplies it with
             the necessary regelialia.
           </p>
-          {/* View More Button */}
-          <button className="link-button" onClick={() => console.log('View More')}>
-            View More
-          </button>
+          
         </div>
       </div>
     </div>
